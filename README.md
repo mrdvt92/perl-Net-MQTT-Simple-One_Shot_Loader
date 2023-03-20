@@ -14,7 +14,7 @@ Net::MQTT::Simple::One\_Shot\_Loader - Perl package to add one\_shot method to N
 
 This package loads the `one_shot` method into the [Net::MQTT::Simple](https://metacpan.org/pod/Net::MQTT::Simple) name space to provide a well tested remote procedure call (RPC) via MQTT.  Many IoT devices only support MQTT as a protocol so, in order to query state or settings these properties need to be requested by sending a message on one queue and receiving a response on another queue.
 
-Due to the way [Net::MQTT::Simple::SSL](https://metacpan.org/pod/Net::MQTT::Simple::SSL) was implemented as a super class of [Net::MQTT::Simple](https://metacpan.org/pod/Net::MQTT::Simple) and since the author of [Net::MQTT::Simple](https://metacpan.org/pod/Net::MQTT::Simple) did not want to implement this method in his package (ref [GitHub](https://github.com/Juerd/Net-MQTT-Simple/pull/22#pullrequestreview-1340685240), we implemented this method in a method loader package.
+Due to the way [Net::MQTT::Simple::SSL](https://metacpan.org/pod/Net::MQTT::Simple::SSL) was implemented as a super class of [Net::MQTT::Simple](https://metacpan.org/pod/Net::MQTT::Simple) and since the author of [Net::MQTT::Simple](https://metacpan.org/pod/Net::MQTT::Simple) did not want to implement this method in his package (ref [GitHub](https://github.com/Juerd/Net-MQTT-Simple/pull/22#pullrequestreview-1340685240)), we implemented this method in a method loader package.
 
 # METHODS
 
@@ -38,6 +38,6 @@ Michael R. Davis
 
 # COPYRIGHT AND LICENSE
 
-Copyright (C) 2023 by Michael R. Davis
+MIT License
 
-LICENSE MIT
+Copyright (c) 2023 Michael R. Davis

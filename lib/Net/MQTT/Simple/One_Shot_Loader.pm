@@ -21,7 +21,7 @@ Net::MQTT::Simple::One_Shot_Loader - Perl package to add one_shot method to Net:
 
 This package loads the C<one_shot> method into the L<Net::MQTT::Simple> name space to provide a well tested remote procedure call (RPC) via MQTT.  Many IoT devices only support MQTT as a protocol so, in order to query state or settings these properties need to be requested by sending a message on one queue and receiving a response on another queue.
 
-Due to the way L<Net::MQTT::Simple::SSL> was implemented as a super class of L<Net::MQTT::Simple> and since the author of L<Net::MQTT::Simple> did not want to implement this method in his package (ref L<GitHub|https://github.com/Juerd/Net-MQTT-Simple/pull/22#pullrequestreview-1340685240>, we implemented this method in a method loader package.
+Due to the way L<Net::MQTT::Simple::SSL> was implemented as a super class of L<Net::MQTT::Simple> and since the author of L<Net::MQTT::Simple> did not want to implement this method in his package (ref L<GitHub|https://github.com/Juerd/Net-MQTT-Simple/pull/22#pullrequestreview-1340685240>), we implemented this method in a method loader package.
 
 =head1 METHODS
 
@@ -99,9 +99,9 @@ Michael R. Davis
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2023 by Michael R. Davis
+MIT License
 
-LICENSE MIT
+Copyright (c) 2023 Michael R. Davis
 
 =cut
 
