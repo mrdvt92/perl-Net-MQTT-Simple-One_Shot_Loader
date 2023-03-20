@@ -1,0 +1,9 @@
+Changes
+Makefile.PL
+MANIFEST
+LICENSE
+README.md
+t/001_load.t
+t/002_one_shot_object.t
+lib/Net/MQTT/Simple/One_Shot_Loader.pm
+perl-Net-MQTT-Simple-One_Shot_Loader.spec
