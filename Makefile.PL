@@ -5,6 +5,7 @@ WriteMakefile(
     VERSION_FROM   => 'lib/Net/MQTT/Simple/One_Shot_Loader.pm',
     PREREQ_PM      => {
                        'Net::MQTT::Simple' => 1.24, #1.21 does not work
+                       'Time::HiRes'       => 0,
                       },
     ABSTRACT_FROM  => 'lib/Net/MQTT/Simple/One_Shot_Loader.pm',
     AUTHOR         => 'Michael R. Davis',

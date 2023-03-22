@@ -28,10 +28,10 @@ SKIP: {
     my $timer    = time();
     my $response = $mqtt->one_shot(my_timeout => my_topic => my_message => $timeout); #loop back
     $timer       = time() - $timer;
-    ok($timer < $timeout * 1.5, 'timeout is less that 1.5 of timeout');
+    ok($timer < $timeout * 1.5, 'timeout is less than 150% of timeout');
     isa_ok($response, 'Net::MQTT::Simple::One_Shot_Loader::Response');
     ok($response->error, 'one_shot error code');
-    is($response->message, undef, 'one_shot message');
-    is($response->topic, undef, 'one_shot topic');
+    is($response->message, '', 'one_shot message');
+    is($response->topic, 'my_timeout', 'one_shot topic');
   }
 }

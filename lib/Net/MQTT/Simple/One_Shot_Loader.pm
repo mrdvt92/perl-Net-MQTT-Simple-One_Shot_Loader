@@ -1,9 +1,9 @@
 package Net::MQTT::Simple::One_Shot_Loader;
 use strict;
 use warnings;
-use Net::MQTT::Simple;
+require Net::MQTT::Simple; #skip import
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -44,24 +44,26 @@ Returns an object representing the first message that matches the subscription t
   sub error   {shift->{'error'}};
   sub topic   {shift->{'topic'}};
   sub message {shift->{'message'}};
+  sub time    {shift->{'time'}};
 }
 
 {
   package Net::MQTT::Simple;
   use strict;
   use warnings;
+  use Time::HiRes qw{};
 
   sub one_shot {
-    my $self      = shift; #isa Net::MQTT::Simple or Net::MQTT::Simple::SSL
-    my $topic_sub = shift or die("Error: subscribe topic is required");
-    my $topic_pub = shift or die("Error: publish topic is required");
-    my $message   = shift;
-    $message      = '' unless defined $message; #default '', allow 0 and support perl 5.8
-    my $timeout   = shift || 1.5; #seconds
+    my $self        = shift; #isa Net::MQTT::Simple or Net::MQTT::Simple::SSL
+    my $topic_sub   = shift or die('Error: subscribe topic is required');
+    my $topic_pub   = shift or die('Error: publish topic is required');
+    my $message     = shift;
+    $message        = '' unless defined $message; #default '', allow 0 and support perl 5.8
+    my $timeout     = shift || 1.5; #seconds
 
-    my $found     = 0; #anonymous sub updates these variables
-    my $topic_out;
-    my $message_out;
+    my $found       = 0; #anonymous sub updates these variables
+    my $topic_out   = $topic_sub;
+    my $message_out = '';
 
     $self->subscribe($topic_sub => sub {
                                         unless ($found) { #stop after first found but we get multiple calls per tick
@@ -72,19 +74,23 @@ Returns an object representing the first message that matches the subscription t
                                        }
     );
 
+    my $timer       = Time::HiRes::time();
     $self->publish($topic_pub => $message);
 
-    my $future    = Time::HiRes::time() + $timeout;
+    my $future      = Time::HiRes::time() + $timeout;
     while (Time::HiRes::time() < $future) {
       $self->tick($timeout); #it takes a few ticks to clear out LWT
       last if $found;
     }
+    $timer          = Time::HiRes::time() - $timer;
+    my $error       = $found ? '' : sprintf('subscribe timeout (%0.1f s)', $timer);
 
     $self->unsubscribe($topic_sub); #must unsubscribe to do one_shot back to back
     return bless {
-                  error   => ($found ? 0 : 1),
+                  error   => $error,
                   topic   => $topic_out,
                   message => $message_out,
+                  time    => $timer,
                  }, 'Net::MQTT::Simple::One_Shot_Loader::Response';
   }
 }
