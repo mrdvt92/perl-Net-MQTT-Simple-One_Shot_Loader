@@ -48,7 +48,8 @@ Returns an object representing the first message that matches the subscription t
 }
 
 {
-  package Net::MQTT::Simple;
+  package #hide from CPAN
+    Net::MQTT::Simple;
   use strict;
   use warnings;
   use Time::HiRes qw{};
